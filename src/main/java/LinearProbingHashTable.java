@@ -110,13 +110,17 @@ public class LinearProbingHashTable<K, V> implements GradableMap<K, V> {
 	}
 
 	/**
-	 * @return
+	 * @return true if this hashtable maps no keys to values;
+	 * 			false otherwise.
 	 */
 	@Override
 	public boolean isEmpty() {
 		return array.length == 0;
 	}
 
+	/**
+	 * @return a set view of the keys contained in this map.
+	 */
 	@Override
 	public Set<K> keySet() {
 		Set<K> set = new HashSet<>();
@@ -127,10 +131,23 @@ public class LinearProbingHashTable<K, V> implements GradableMap<K, V> {
 			}
 			i++;
 		}
-
-		return null;
+		return set;
 	}
 
+	/**
+	 * @param key   key with which the specified value is to be associated
+	 * @param value value to be associated with the specified key
+	 * @return a)If key is non-null and was not previously in the table, add the entry
+	 * 				and return null.
+	 * 			b)If key is non-null and was previously in the table,
+	 * 				add the entry and return the old value (the one that was just overwritten).
+	 *			c)If key is null, throw a NullPointerException immediately. On
+	 * 				average, this should happen in O(1) time. Remember that you will
+	 *			 	have to resize when the max load factor is exceeded; that is, if the
+	 * 				max load factor is .75 and the current load factor is also .75, do not
+	 * 				resize.
+
+	 */
 	@Override
 	public V put(K key, V value) {
 		HashTableEntry<K,V> entry = new HashTableEntry<>(key,value);
@@ -169,6 +186,9 @@ public class LinearProbingHashTable<K, V> implements GradableMap<K, V> {
 		}
 
 
+	/**
+	 * @param otherMap entries in this map will be stored in this hashtable
+	 */
 	@Override
 	public void putAll(Map<? extends K, ? extends V> otherMap) {
 		for (Map.Entry<? extends K, ? extends V> entry : otherMap.entrySet()){
@@ -177,6 +197,13 @@ public class LinearProbingHashTable<K, V> implements GradableMap<K, V> {
 		
 	}
 
+	/**
+	 * @param key key whose mapping is to be removed from the map
+	 * @return  a) If key is non-null and the entry exists, remove the entry and
+	 * 				return the associated value.
+	 * 			b)If key is non-null and the entry does not exist, return null.
+	 * 			c)If key is null, throw a NullPointerException.
+	 */
 	@Override
 	public V remove(Object key) {
 		if (key == null) throw new NullPointerException("Key cannot be null");
@@ -203,11 +230,17 @@ public class LinearProbingHashTable<K, V> implements GradableMap<K, V> {
 	}
 
 
+	/**
+	 * @return capacity of the hashtable
+	 */
 	@Override
 	public int size() {
 		return size;
 	}
 
+	/**
+	 * @return a arraylist of values that contained in this hashtable.
+	 */
 	@Override
 	public Collection<V> values() {
 		Collection<V> collect = new ArrayList<>();
@@ -218,22 +251,32 @@ public class LinearProbingHashTable<K, V> implements GradableMap<K, V> {
 		return collect;
 	}
 
+	/**
+	 * A setter from gradableMap
+	 */
 	@Override
 	public HashTableEntry<K, V>[] getArray() {
 		return getArray();
 
 	}
 
+	/**
+	 * A setter from gradableMap
+	 */
 	@Override
 	public void setArray(HashTableEntry<K, V>[] array) {
 		this.array = array;
 		
 	}
 
+	/**
+	 * A setter from gradableMap
+	 */
 	@Override
 	public void setSize(int size) {
 		this.size = size;
 		
 	}
+
 
 }

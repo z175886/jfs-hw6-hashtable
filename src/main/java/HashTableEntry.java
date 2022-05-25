@@ -1,6 +1,7 @@
 import java.util.Map.Entry;
 
 public class HashTableEntry<K,V> implements Entry<K, V> {
+
 	private K key;
 	private V value;
 	private boolean isAvailable;
