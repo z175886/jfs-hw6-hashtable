@@ -6,12 +6,14 @@ public class HashTableEntry<K,V> implements Entry<K, V> {
 	private V value;
 	private boolean isAvailable;
 
+
 	public HashTableEntry(K key, V value){
 		this.key = key;
 		this.value = value;
 		isAvailable = false;
 
 	}
+
 	
 	public boolean isAvailable(){
 		return isAvailable;
@@ -21,32 +23,46 @@ public class HashTableEntry<K,V> implements Entry<K, V> {
 		this.isAvailable = isAvailable;
 	}
 
-	
+
+
 	@Override
 	public K getKey() {
 		return key;
+
 	}
 
 	@Override
 	public V getValue() {
 		return value;
+
 	}
 
 	@Override
 	public V setValue(V value) {
+
+		V oldValue = this.value;
 		this.value = value;
-		return value;
+		return oldValue;
 	}
 	
 	@Override
 	public int hashCode(){
-		return key.hashCode();
+		return (this.getKey()==null   ? 0 : this.getKey().hashCode()) ^
+				(this.getValue()==null ? 0 : this.getValue().hashCode());
 
 	}
 	
 	@Override
 	public boolean equals(Object o){
-		if(hashCode()== o.hashCode()) return  true;
-		return false;
+		try{
+			HashTableEntry e2 =  (HashTableEntry) o;
+			return (this.getKey()==null ? e2.getKey()==null : this.getKey().equals(e2.getKey()))  &&
+					(this.getValue()==null ? e2.getValue()==null : this.getValue().equals(e2.getValue()));
+
+		}catch (Exception e){
+			System.out.println("Object doesn't in the same object type");
+			return false;
+		}
+
 	}
 }
