@@ -47,7 +47,7 @@ public class LinearProbingHashTable<K, V> implements GradableMap<K, V> {
 	@Override
 	public boolean containsKey(Object arg0) {
 		int targetIndex = arg0.hashCode() % size;
-		if (array[targetIndex]!=null && array[targetIndex].getKey().equals(arg0))return true;
+		if (array[targetIndex]!=null && array[targetIndex].getKey().equals(arg0)&&!array[targetIndex].isAvailable() )return true;
 
 		for (int i = 0; i< size ; i++){
 			if(array[i]!=null){
